@@ -1,0 +1,111 @@
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :buildSrc:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :buildSrc:compilePluginsBlocks UP-TO-DATE
+> Task :buildSrc:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :buildSrc:generateScriptPluginAdapters UP-TO-DATE
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Fabric Loom: 1.16.2
+
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preprocessLegit
+> Task :processIncludeJars UP-TO-DATE
+> Task :processLegitResources UP-TO-DATE
+> Task :compileLegitKotlin
+
+> Task :compileLegitJava
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:7: error: cannot find symbol
+import net.minecraft.client.renderer.MultiBufferSource;
+                                    ^
+  symbol:   class MultiBufferSource
+  location: package net.minecraft.client.renderer
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:25: error: package MultiBufferSource does not exist
+    @Shadow @Final private MultiBufferSource.BufferSource bufferSource;
+                                            ^
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:6: error: cannot find symbol
+import net.minecraft.client.renderer.MultiBufferSource;
+                                    ^
+  symbol:   class MultiBufferSource
+  location: package net.minecraft.client.renderer
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:20: error: cannot find symbol
+    private static void onRenderFire(PoseStack poseStack, MultiBufferSource multiBufferSource, TextureAtlasSprite textureAtlasSprite, CallbackInfo ci) {
+                                                          ^
+  symbol:   class MultiBufferSource
+  location: class MixinScreenEffectRenderer
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:27: error: cannot find symbol
+    private static void onRenderWater(Minecraft minecraft, PoseStack poseStack, MultiBufferSource multiBufferSource, CallbackInfo ci) {
+                                                                                ^
+  symbol:   class MultiBufferSource
+  location: class MixinScreenEffectRenderer
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGui.java:66: error: cannot find symbol
+        if (this.minecraft.options.hideGui) return;
+                                  ^
+  symbol:   variable hideGui
+  location: variable options of type Options
+C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:31: error: method fabric_onReady in interface GuiRendererExtensions cannot be applied to given types;
+            ((GuiRendererExtensions) (Object) this).fabric_onReady(storage);
+                                                   ^
+  required: no arguments
+  found:    SubmitNodeStorage
+  reason: actual and formal argument lists differ in length
+7 errors
+
+> Task :compileLegitJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileLegitJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:31: error: method fabric_onReady in interface GuiRendererExtensions cannot be applied to given types;
+              ((GuiRendererExtensions) (Object) this).fabric_onReady(storage);
+                                                     ^
+    required: no arguments
+    found:    SubmitNodeStorage
+    reason: actual and formal argument lists differ in length
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:7: error: cannot find symbol
+  import net.minecraft.client.renderer.MultiBufferSource;
+                                      ^
+    symbol:   class MultiBufferSource
+    location: package net.minecraft.client.renderer
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:6: error: cannot find symbol
+  import net.minecraft.client.renderer.MultiBufferSource;
+                                      ^
+    symbol:   class MultiBufferSource
+    location: package net.minecraft.client.renderer
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:20: error: cannot find symbol
+      private static void onRenderFire(PoseStack poseStack, MultiBufferSource multiBufferSource, TextureAtlasSprite textureAtlasSprite, CallbackInfo ci) {
+                                                            ^
+    symbol:   class MultiBufferSource
+    location: class MixinScreenEffectRenderer
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinScreenEffectRenderer.java:27: error: cannot find symbol
+      private static void onRenderWater(Minecraft minecraft, PoseStack poseStack, MultiBufferSource multiBufferSource, CallbackInfo ci) {
+                                                                                  ^
+    symbol:   class MultiBufferSource
+    location: class MixinScreenEffectRenderer
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGui.java:66: error: cannot find symbol
+          if (this.minecraft.options.hideGui) return;
+                                    ^
+    symbol:   variable hideGui
+    location: variable options of type Options
+  C:\Users\kokko\Documents\GitHub\Tweaky-26.2\build\preprocessed\legit\java\com\renderoptimiser\mixin\MixinGuiRenderer.java:25: error: package MultiBufferSource does not exist
+      @Shadow @Final private MultiBufferSource.BufferSource bufferSource;
+                                              ^
+  7 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 13s
+14 actionable tasks: 3 executed, 11 up-to-date

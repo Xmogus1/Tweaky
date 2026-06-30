@@ -1,0 +1,130 @@
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:generateExternalPluginSpecBuilders
+> Task :buildSrc:extractPrecompiledScriptPluginPlugins
+> Task :buildSrc:generateScriptPluginAdapters
+> Task :buildSrc:pluginDescriptors
+> Task :buildSrc:processResources
+> Task :buildSrc:compilePluginsBlocks
+
+> Task :buildSrc:generatePrecompiledScriptPluginAccessors
+Fabric Loom: 1.16.2
+Fabric Loom: 1.16.2
+
+> Task :buildSrc:compileKotlin
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:classes
+> Task :buildSrc:jar
+
+> Configure project :
+Fabric Loom: 1.16.2
+
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preprocessLegit
+> Task :processIncludeJars
+> Task :processLegitResources
+
+> Task :compileLegitKotlin FAILED
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/RenderOptimiser.kt:48:20 Unresolved reference 'setScreen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/RenderOptimiser.kt:56:69 Unresolved reference 'bufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/event/impl/RenderWorldEvent.kt:8:38 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/FeatureManager.kt:52:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/general/Chat.kt:19:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/general/Chat.kt:32:31 Unresolved reference 'chat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/BlockOverlay.kt:25:28 Unresolved reference 'hideGui'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/InventorySearch.kt:49:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/InventorySearch.kt:76:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/InventorySearch.kt:88:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/InventorySearch.kt:96:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/misc/SnappyTappy.kt:18:20 Unresolved reference 'screen'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/visual/RenderOptimizer.kt:23:53 Unresolved reference 'FALLING_BLOCK'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/visual/RenderOptimizer.kt:24:57 Unresolved reference 'LIGHTNING_BOLT'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/features/impl/visual/RenderOptimizer.kt:25:50 Unresolved reference 'EXPERIENCE_ORB'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/ui/clickgui/components/impl/ColorCodeSetting.kt:16:57 Unresolved reference 'isColor'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/ui/clickgui/components/impl/ColorCodeSetting.kt:29:68 Unresolved reference 'color'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/ui/clickgui/components/impl/ColorCodeSetting.kt:109:48 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/ui/clickgui/components/impl/ColorCodeSetting.kt:112:37 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:136:62 Unresolved reference 'chat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:137:68 Unresolved reference 'chat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:149:24 Unresolved reference 'isColor'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:149:38 Unresolved reference 'color'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:153:46 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:164:65 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:165:69 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:166:76 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:167:83 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/ChatUtils.kt:168:77 Unresolved reference 'char'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/TabListUtils.kt:38:44 Inapplicable candidate(s): fun add(element: Pair<Component, PlayerInfo>): Boolean
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/TabListUtils.kt:38:55 Unresolved reference 'tabList'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/TabListUtils.kt:38:87 Cannot infer type for type parameter 'A'. Specify it explicitly.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/TabListUtils.kt:38:87 Cannot infer type for type parameter 'B'. Specify it explicitly.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/items/ItemRarity.kt:8:89 Unresolved reference 'color'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:10:38 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:21:1 Class 'ItemRenderer' is not abstract and does not implement abstract base class member:
+fun renderToTexture(renderState: T, poseStack: PoseStack, submitNodeCollector: SubmitNodeCollector): Unit
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:21:37 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:21:119 Too many arguments for 'constructor<T : PictureInPictureRenderState>(): PictureInPictureRenderer<T>'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:30:5 'renderToTexture' overrides nothing. Potential signatures for overriding:
+fun renderToTexture(renderState: ItemRenderer.ItemState, poseStack: PoseStack, submitNodeCollector: SubmitNodeCollector): Unit
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:31:42 Cannot access 'field featureRenderDispatcher: FeatureRenderDispatcher': it is private in 'net.minecraft.client.renderer.GameRenderer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:45:68 Unresolved reference 'submitNodeStorage'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:50:36 Cannot access 'field lighting: Lighting': it is private in 'net.minecraft.client.renderer.GameRenderer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:52:48 No value passed for parameter 'submitNodeStorage'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:55:36 Cannot access 'field lighting: Lighting': it is private in 'net.minecraft.client.renderer.GameRenderer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ItemRenderer.kt:57:48 No value passed for parameter 'submitNodeStorage'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:17:14 Unresolved reference 'withVertexFormat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:17:80 Unresolved reference 'Mode'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:24:14 Unresolved reference 'withVertexFormat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:24:80 Unresolved reference 'Mode'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:44:14 Unresolved reference 'withVertexFormat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:44:80 Unresolved reference 'Mode'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:45:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:52:14 Unresolved reference 'withVertexFormat'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:52:80 Unresolved reference 'Mode'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/ModRenderPipelines.kt:53:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:9:38 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:64:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:71:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:100:36 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:174:36 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:243:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:251:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:298:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:305:27 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:335:38 Cannot access 'field mainCamera: Camera': it is private in 'net.minecraft.client.renderer.GameRenderer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:343:27 Unresolved reference 'renderBuffers'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:347:59 Unresolved reference 'drawInBatch'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:375:40 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:375:72 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:387:23 Unresolved reference 'endBatch'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:395:40 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:395:72 Unresolved reference 'getBuffer'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/Render3D.kt:403:23 Unresolved reference 'endBatch'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/RenderContext.kt:7:38 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/RenderContext.kt:9:69 Unresolved reference 'MultiBufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/RenderContext.kt:12:55 Unresolved reference 'bufferSource'.
+e: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/preprocessed/legit/kotlin/com/renderoptimiser/utils/render/RenderContext.kt:12:87 Cannot access 'field mainCamera: Camera': it is private in 'net.minecraft.client.renderer.GameRenderer'.
+
+[Incubating] Problems report is available at: file:///C:/Users/kokko/Documents/GitHub/Tweaky-26.2/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileLegitKotlin' (registered by plugin 'org.jetbrains.kotlin.jvm').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 20s
+13 actionable tasks: 13 executed

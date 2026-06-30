@@ -1,0 +1,28 @@
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :buildSrc:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :buildSrc:compilePluginsBlocks UP-TO-DATE
+> Task :buildSrc:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :buildSrc:generateScriptPluginAdapters UP-TO-DATE
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Fabric Loom: 1.16.2
+
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preprocessLegit
+> Task :processIncludeJars UP-TO-DATE
+> Task :processLegitResources UP-TO-DATE
+> Task :compileLegitKotlin
+> Task :compileLegitJava
+> Task :legitClasses
+> Task :jarLegit
+
+BUILD SUCCESSFUL in 15s
+15 actionable tasks: 4 executed, 11 up-to-date

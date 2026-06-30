@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.renderoptimiser.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.renderoptimiser.init.AutoMixinDiscovery",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

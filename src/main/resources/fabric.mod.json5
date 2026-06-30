@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "tweaky",
+  "version": "${version}",
+  "name": "Tweaky",
+  "description": "Lightweight Minecraft QoL & visual tweaks.",
+  "authors": [],
+  "license": "CC0-1.0",
+  "icon": "assets/tweaky/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "modmenu": [
+      "com.renderoptimiser.ui.clickgui.ModMenuIntegration"
+    ],
+    "client": [
+      {
+        "value": "com.renderoptimiser.RenderOptimiser",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "tweaky.mixins.json"
+  ],
+  "accessWidener": "tweaky.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "minecraft": "26.2",
+    "java": ">=25",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  }
+}
