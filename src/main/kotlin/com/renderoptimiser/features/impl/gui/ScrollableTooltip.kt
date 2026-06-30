@@ -1,0 +1,62 @@
+package com.renderoptimiser.features.impl.gui
+
+import com.renderoptimiser.features.Feature
+import com.renderoptimiser.mixin.IAbstractContainerScreen
+import com.renderoptimiser.ui.clickgui.components.impl.SliderSetting
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents
+import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+import org.lwjgl.glfw.GLFW
+
+object ScrollableTooltip: Feature("Allows you to scroll through long tooltips.") {
+    val scale by SliderSetting("Tooltip Scale", 100, 30, 150, 0.1).withDescription("the size of the tooltip")
+    internal val scrollSpeed by SliderSetting("Scroll Speed", 3, 1, 10, 1).withDescription("how fast the tooltip scrolls")
+    internal val scaleSpeed by SliderSetting("Scale Speed", 3, 1, 10, 1).withDescription("how fast the tooltip scales")
+
+    @JvmField
+    var scrollAmountX = 0f
+
+    @JvmField
+    var scrollAmountY = 0f
+
+    @JvmField
+    var scaleOverride = 0f
+
+    @JvmStatic
+    var slot = 0
+        set(value) {
+            if (value == field) return
+            scrollAmountX = 0f
+            scrollAmountY = 0f
+            scaleOverride = 0f
+            field = value
+        }
+
+    override fun init() {
+        ScreenEvents.BEFORE_INIT.register { _, screen, _, _ ->
+            if (! enabled) return@register
+            val containerScreen = screen as? AbstractContainerScreen<*> ?: return@register
+            ScreenMouseEvents.afterMouseScroll(containerScreen).register { _, _, _, _, verticalAmount, _ ->
+                val hoveredSlot = (containerScreen as IAbstractContainerScreen).hoveredSlot ?: return@register false
+                if (hoveredSlot.item.isEmpty) return@register false
+
+                val scroll = (verticalAmount * scrollSpeed.value).toFloat()
+                val holdingShift = GLFW.glfwGetKey(mc.window.handle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS
+                val holdingCtrl = GLFW.glfwGetKey(mc.window.handle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
+
+                if (holdingShift && ! holdingCtrl) scrollAmountX -= scroll
+                else if (! holdingShift && holdingCtrl) applyScaleScroll(verticalAmount)
+                else scrollAmountY += scroll
+
+                true
+            }
+        }
+    }
+
+    @JvmStatic
+    internal fun applyScaleScroll(verticalAmount: Double) {
+        val baseScale = scale.value.toFloat() / 100f
+        val nextScale = (baseScale + scaleOverride / 10f + (verticalAmount / 100f).toFloat() * scaleSpeed.value.toFloat()).coerceIn(0.3f, 2.0f)
+        scaleOverride = (nextScale - baseScale) * 10f
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "classic_hurt": {
+    "sounds": [
+      "tweaky:classic_hurt"
+    ]
+  },
+  "ice_place": {
+    "sounds": [
+      "tweaky:ice_place/1",
+      "tweaky:ice_place/2",
+      "tweaky:ice_place/3",
+      "tweaky:ice_place/4",
+      "tweaky:ice_place/5",
+      "tweaky:ice_place/6"
+    ]
+  }
+}
