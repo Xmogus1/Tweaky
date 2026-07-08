@@ -35,7 +35,7 @@ import java.time.Duration
  * next launch. The CurseForge build strips the whole install path (their rules forbid
  * self-updating mods) and only announces new versions.
  */
-object AutoUpdate: Feature("Checks GitHub for new Tweaky versions and installs them when you close the game.", toggled = true) {
+object AutoUpdate: Feature("Keeps Tweaky updated automatically.", toggled = true) {
     private const val REPO = "Xmogus1/tweaky"
     //#if CURSEFORGE
     //#else
