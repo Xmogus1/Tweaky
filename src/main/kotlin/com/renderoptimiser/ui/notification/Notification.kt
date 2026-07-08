@@ -3,8 +3,9 @@ package com.renderoptimiser.ui.notification
 import com.renderoptimiser.RenderOptimiser.mc
 import com.renderoptimiser.ui.utils.Animation
 import net.minecraft.network.chat.Component
+import java.awt.Color
 
-class Notification(val title: String, val message: String, val duration: Long) {
+class Notification(val title: String, val message: String, val duration: Long, val titleColor: Color = Color(85, 255, 85)) {
     val anim = Animation(350L)
     var elapsedTime = 0L
     var isDead = false

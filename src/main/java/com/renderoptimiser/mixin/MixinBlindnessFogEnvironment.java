@@ -1,6 +1,6 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.Camera;
+import com.renderoptimiser.features.impl.visual.Camera;
 import net.minecraft.client.renderer.fog.environment.BlindnessFogEnvironment;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;

@@ -1,5 +1,6 @@
 val preprocessLegit = registerPreprocessTask("legit")
 val preprocessCheat = registerPreprocessTask("cheat")
+val preprocessCurseforge = registerPreprocessTask("curseforge")
 
 tasks.named<ProcessResources>("processResources") {
     inputs.property("version", project.version)
@@ -49,3 +50,4 @@ fun registerVariantResources(variantName: String, preprocessTask: TaskProvider<T
 
 registerVariantResources("legit", preprocessLegit)
 registerVariantResources("cheat", preprocessCheat)
+registerVariantResources("curseforge", preprocessCurseforge)

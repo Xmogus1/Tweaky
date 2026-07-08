@@ -1,6 +1,6 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.sound.MonoAudio;
+import com.renderoptimiser.features.impl.sound.MonoAudio;
 import com.renderoptimiser.interfaces.MonoAudioChannel;
 import com.mojang.blaze3d.audio.Channel;
 import net.minecraft.world.phys.Vec3;

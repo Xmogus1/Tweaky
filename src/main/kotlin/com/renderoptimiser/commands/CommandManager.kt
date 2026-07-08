@@ -11,7 +11,6 @@ object CommandManager {
 
     init {
         val result = ClassGraph()
-            .enableAllInfo()
             .acceptPackages(RenderOptimiser::class.java.`package`.name)
             .overrideClassLoaders(Thread.currentThread().contextClassLoader)
             .scan()

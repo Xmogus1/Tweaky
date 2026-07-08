@@ -2,7 +2,7 @@ package com.renderoptimiser.mixin;
 
 import com.renderoptimiser.event.EventBus;
 import com.renderoptimiser.event.impl.CheckEntityGlowEvent;
-import com.renderoptimiser.features.impl.misc.Camera;
+import com.renderoptimiser.features.impl.visual.Camera;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,6 +23,8 @@ public abstract class MixinEntity {
 
     @Inject(method = "isCurrentlyGlowing", at = @At("HEAD"), cancellable = true)
     private void onIsCurrentlyGlowing(CallbackInfoReturnable<Boolean> cir) {
+        // Called per entity per frame by the renderer; skip all allocation when nothing wants glow.
+        if (!EventBus.hasListeners(CheckEntityGlowEvent.class)) return;
         var entity = (Entity) (Object) this;
 
         var event = new CheckEntityGlowEvent(entity);

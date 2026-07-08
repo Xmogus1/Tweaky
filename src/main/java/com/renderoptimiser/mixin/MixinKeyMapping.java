@@ -1,7 +1,7 @@
 package com.renderoptimiser.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.renderoptimiser.features.impl.misc.GuiMove;
+import com.renderoptimiser.features.impl.gui.GuiMove;
 import net.minecraft.client.KeyMapping;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

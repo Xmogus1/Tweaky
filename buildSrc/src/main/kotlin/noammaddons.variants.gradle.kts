@@ -19,6 +19,8 @@ val cheatJavaDir = layout.buildDirectory.dir("preprocessed/cheat/java")
 val cheatKotlinDir = layout.buildDirectory.dir("preprocessed/cheat/kotlin")
 val legitJavaDir = layout.buildDirectory.dir("preprocessed/legit/java")
 val legitKotlinDir = layout.buildDirectory.dir("preprocessed/legit/kotlin")
+val curseforgeJavaDir = layout.buildDirectory.dir("preprocessed/curseforge/java")
+val curseforgeKotlinDir = layout.buildDirectory.dir("preprocessed/curseforge/kotlin")
 
 fun SourceSet.configurePreprocessedVariant(javaDir: Provider<Directory>, kotlinDir: Provider<Directory>) {
     java.setSrcDirs(listOf(javaDir.get().asFile))
@@ -38,6 +40,7 @@ fun Configuration.copyAttributesFrom(other: Configuration) {
 
 val cheatSourceSet = sourceSets.create("cheat").apply { configurePreprocessedVariant(cheatJavaDir, cheatKotlinDir) }
 val legitSourceSet = sourceSets.create("legit").apply { configurePreprocessedVariant(legitJavaDir, legitKotlinDir) }
+val curseforgeSourceSet = sourceSets.create("curseforge").apply { configurePreprocessedVariant(curseforgeJavaDir, curseforgeKotlinDir) }
 
 tasks.named<KotlinCompile>("compileCheatKotlin") {
     dependsOn("preprocessCheat")
@@ -87,6 +90,26 @@ tasks.named("legitClasses") {
     dependsOn("compileLegitKotlin", "compileLegitJava")
 }
 
+tasks.named<KotlinCompile>("compileCurseforgeKotlin") {
+    dependsOn("preprocessCurseforge")
+    inputs.dir("src/main/kotlin")
+    inputs.dir(curseforgeKotlinDir)
+
+    compilerOptions { freeCompilerArgs.add("-Xjava-source-roots=${curseforgeJavaDir.get().asFile.invariantSeparatorsPath}") }
+}
+
+tasks.named<JavaCompile>("compileCurseforgeJava") {
+    dependsOn("preprocessCurseforge", "compileCurseforgeKotlin")
+    inputs.dir("src/main/java")
+    inputs.dir(curseforgeJavaDir)
+    options.release.set(25)
+    classpath += files(tasks.named<KotlinCompile>("compileCurseforgeKotlin").flatMap { it.destinationDirectory })
+}
+
+tasks.named("curseforgeClasses") {
+    dependsOn("compileCurseforgeKotlin", "compileCurseforgeJava")
+}
+
 val jarCheat = tasks.register<Jar>("jarCheat") {
     dependsOn("cheatClasses", "processCheatResources")
     from(cheatSourceSet.output)
@@ -99,6 +122,16 @@ val jarLegit = tasks.register<Jar>("jarLegit") {
     dependsOn("legitClasses", "processLegitResources")
     from(legitSourceSet.output)
     archiveClassifier.set("legit")
+    destinationDirectory.set(libsDir)
+    from("LICENSE") { rename { "${it}_$mod_name" } }
+}
+
+// CurseForge distribution build: legit feature set with reviewer-flagged functionality stripped
+// (PowerShell clipboard, external screenshot uploads). Produced only when explicitly requested.
+val jarCurseforge = tasks.register<Jar>("jarCurseforge") {
+    dependsOn("curseforgeClasses", "processCurseforgeResources")
+    from(curseforgeSourceSet.output)
+    archiveClassifier.set("curseforge")
     destinationDirectory.set(libsDir)
     from("LICENSE") { rename { "${it}_$mod_name" } }
 }

@@ -46,4 +46,19 @@ object Resolution {
     fun getMouseY() = (mc.mouseHandler.ypos() / mc.window.screenHeight.toDouble() * height).toInt()
 
     fun toGuiScaled(value: Number) = (value * scale).roundToInt()
+
+    /**
+     * enableScissor with Resolution-space coordinates, applied under an IDENTITY pose. The vanilla
+     * scissor transforms its rect by the current pose at enable-time; combining that with our scale
+     * transform proved fragile at some window sizes / GUI scales (clip rect landing offset from the
+     * drawn content — rows "leaking" outside the menu). Converting to raw gui coords ourselves and
+     * enabling under identity removes the pose from the equation entirely.
+     */
+    fun scissor(ctx: GuiGraphicsExtractor, x1: Number, y1: Number, x2: Number, y2: Number) {
+        val pose = ctx.pose()
+        pose.pushMatrix()
+        pose.identity()
+        ctx.enableScissor(toGuiScaled(x1), toGuiScaled(y1), toGuiScaled(x2), toGuiScaled(y2))
+        pose.popMatrix()
+    }
 }

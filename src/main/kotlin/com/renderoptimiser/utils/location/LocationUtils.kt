@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 
 object LocationUtils {
     @JvmStatic
-    val onHypixel get() = mc.player?.connection?.serverBrand()?.lowercase()?.contains("hypixel") == true
+    val onHypixel get() = mc.player?.connection?.serverBrand()?.contains("hypixel", ignoreCase = true) == true
 
     @JvmField
     var inSkyblock = false
@@ -155,9 +155,9 @@ object LocationUtils {
     )
 
     private fun isInBossRoom(): Boolean {
-        val playerPos = mc.player?.position() ?: return false
         val floor = dungeonFloorNumber ?: return false
         if (floor !in 1 .. 7) return false
+        val playerPos = mc.player?.position() ?: return false
         return bossRoomBounds[floor - 1].contains(playerPos)
     }
 }

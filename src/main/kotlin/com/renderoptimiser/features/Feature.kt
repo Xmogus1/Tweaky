@@ -35,6 +35,9 @@ open class Feature(
     @JvmField
     var enabled = toggled
 
+    /** The built-in default of [enabled], kept for "reset all settings". */
+    val defaultEnabled = toggled
+
     private val isDev = this::class.java.isAnnotationPresent(Dev::class.java)
     private val alwaysActive = this::class.java.isAnnotationPresent(AlwaysActive::class.java)
 

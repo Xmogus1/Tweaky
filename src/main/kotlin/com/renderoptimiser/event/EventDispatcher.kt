@@ -25,7 +25,9 @@ object EventDispatcher {
 
     fun init() {
         LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register { context ->
-            EventBus.post(RenderWorldEvent(RenderContext.fromContext(context)))
+            // Only build the event + RenderContext when something listens (else it's per-frame garbage).
+            if (EventBus.hasListeners(RenderWorldEvent::class.java))
+                EventBus.post(RenderWorldEvent(RenderContext.fromContext(context)))
         }
 
         ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register { _, _ ->
@@ -55,6 +57,9 @@ object EventDispatcher {
                 if (EventBus.post(ChatMessageEvent(event.packet.content))) { // todo post cancelable on mainthread
                     event.isCanceled = true
                 }
+            }
+            else if (event.packet is ClientboundPlayerChatPacket) {
+                EventBus.post(ChatMessageEvent(Component.literal(event.packet.body.content)))
             }
             else if (event.packet is ClientboundContainerClosePacket) {
                 if (event.packet.containerId == invWindowId) resetInventoryState()

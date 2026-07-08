@@ -122,7 +122,7 @@ tasks.named<ProcessResources>("processResources") {
     }
 }
 
-listOf("processCheatResources", "processLegitResources").forEach { taskName ->
+listOf("processCheatResources", "processLegitResources", "processCurseforgeResources").forEach { taskName ->
     tasks.named<ProcessResources>(taskName) {
         writeNestedJarMetadata()
     }
@@ -137,9 +137,9 @@ tasks.named<Jar>("jar") {
     }
 }
 
-listOf("jarCheat", "jarLegit").forEach { taskName ->
+listOf("jarCheat", "jarLegit", "jarCurseforge").forEach { taskName ->
     tasks.named<Jar>(taskName) {
-        // RenderOptimiser-<mod_version>-<minecraft_version>-<cheat|legit>.jar
+        // Tweaky-<mod_version>-<minecraft_version>-<cheat|legit|curseforge>.jar
         archiveVersion.set("$mod_version-$minecraft_version")
 
         dependsOn("processIncludeJars")

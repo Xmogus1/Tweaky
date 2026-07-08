@@ -139,7 +139,7 @@ object ChatUtils {
     fun chat(msg: Any?) = ThreadUtils.runOnMcThread { mc.gui.hud.chat.addClientSystemMessage(Component.literal(msg.toString().addColor())) }
     fun chat(comp: Component) = ThreadUtils.runOnMcThread { mc.gui.hud.chat.addClientSystemMessage(comp) }
 
-    fun String.addColor() = replace("&", "§")
+    fun String.addColor() = if (indexOf('&') < 0) this else replace('&', '§')
 
     val Component.unformattedText get() = string.removeFormatting()
     val Component.formattedText get() = formatted(this)

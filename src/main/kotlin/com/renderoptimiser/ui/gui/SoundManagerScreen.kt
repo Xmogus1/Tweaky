@@ -2,7 +2,7 @@ package com.renderoptimiser.ui.gui
 
 import com.renderoptimiser.RenderOptimiser
 import com.renderoptimiser.RenderOptimiser.mc
-import com.renderoptimiser.features.impl.misc.sound.SoundManager
+import com.renderoptimiser.features.impl.sound.SoundManager
 import com.renderoptimiser.ui.clickgui.ClickGuiScreen
 import com.renderoptimiser.ui.clickgui.components.Style
 import com.renderoptimiser.ui.utils.Animation

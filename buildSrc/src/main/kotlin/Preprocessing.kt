@@ -11,6 +11,10 @@ private data class StackFrame(val outerInclude: Boolean, val branchWasTrue: Bool
 
 private fun processDirectives(sourceFile: File, variantName: String, stripLineComments: Boolean = false): List<String> {
     val isCheat = variantName == "cheat"
+    // The "curseforge" variant is a legit build (isCheat=false, so it still keeps all #if LEGIT code) with
+    // the extra CURSEFORGE flag set. It is used to strip functionality distribution reviewers reject
+    // (PowerShell process-spawning, external screenshot uploads). See ScreenshotActions/ScreenshotsScreen.
+    val isCurseforge = variantName == "curseforge"
     val stack = mutableListOf<StackFrame>()
     val output = mutableListOf<String>()
     var include = true
@@ -28,6 +32,11 @@ private fun processDirectives(sourceFile: File, variantName: String, stripLineCo
             "#if LEGIT" -> {
                 stack += StackFrame(outerInclude = include, branchWasTrue = ! isCheat)
                 include = ! isCheat && include
+            }
+
+            "#if CURSEFORGE" -> {
+                stack += StackFrame(outerInclude = include, branchWasTrue = isCurseforge)
+                include = isCurseforge && include
             }
 
             "#else" -> {

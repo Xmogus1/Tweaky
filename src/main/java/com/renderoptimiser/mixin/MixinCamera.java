@@ -13,21 +13,23 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.renderoptimiser.features.impl.misc.Camera.*;
+import static com.renderoptimiser.features.impl.visual.Camera.*;
 
+/**
+ * NOTE: deliberately NO @Redirect anywhere in this class. NoammAddons (Tweaky's upstream) ships
+ * the same camera hooks as @Redirects, and two mods redirecting one instruction is a guaranteed
+ * boot crash ("Scanned 0 target(s)") when both are installed. @WrapOperation chains with other
+ * mods' redirects, so Tweaky + NoammAddons can coexist.
+ */
 @Mixin(Camera.class)
 public abstract class MixinCamera {
     @Shadow private float eyeHeightOld;
     @Shadow private float eyeHeight;
 
-    @Shadow
-    protected abstract void setPosition(double x, double y, double z);
-
-    @Redirect(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;setPosition(DDD)V"))
-    private void redirectSetPosition(Camera instance, double x, double y, double z, @Local(argsOnly = true) float partialTicks) {
+    @WrapOperation(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;setPosition(DDD)V"))
+    private void wrapSetPosition(Camera instance, double x, double y, double z, Operation<Void> original, @Local(argsOnly = true) float partialTicks) {
         if (INSTANCE.enabled && getLegacySneakHeight().getValue()) {
             float standingHeight = 1.62f;
             float sneakingHeight = 1.27f;
@@ -46,21 +48,21 @@ public abstract class MixinCamera {
                 crouchAmount = Math.clamp(crouchAmount, 0, 1);
                 double animatedOffset = crouchAmount * maxOffset;
 
-                setPosition(x, y + animatedOffset, z);
+                original.call(instance, x, y + animatedOffset, z);
                 return;
             }
         }
 
-        setPosition(x, y, z);
+        original.call(instance, x, y, z);
     }
 
-    @Redirect(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
-    private double setCameraDistance(LivingEntity instance, Holder<Attribute> attribute) {
+    @WrapOperation(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
+    private double wrapCameraDistance(LivingEntity instance, Holder<Attribute> attribute, Operation<Double> original) {
         if (INSTANCE.enabled && getCustomCameraDistance().getValue()) {
             return getCameraDistance().getValue().doubleValue();
         }
 
-        return instance.getAttributeValue(attribute);
+        return original.call(instance, attribute);
     }
 
     //#if CHEAT
@@ -79,8 +81,12 @@ public abstract class MixinCamera {
 
     @Inject(method = "calculateFov", at = @At(value = "RETURN"), cancellable = true)
     private void calculateFovHook(float partialTicks, CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(INSTANCE.enabled && getCustomFOV().getValue() ? getCustomFOVSlider().getValue().floatValue() : cir.getReturnValue());
-        ;
+        // Base FOV = the Camera feature's custom FOV if enabled, else vanilla; then the Zoom feature
+        // scales it. Done in ONE hook so ordering is deterministic (zoom always composes on top of a
+        // custom FOV) rather than relying on inject order between two separate Camera mixins.
+        float base = INSTANCE.enabled && getCustomFOV().getValue() ? getCustomFOVSlider().getValue().floatValue() : cir.getReturnValue();
+        float zoom = com.renderoptimiser.features.impl.visual.Zoom.fovMultiplier();
+        cir.setReturnValue(zoom != 1.0f ? base * zoom : base);
     }
 
     @ModifyExpressionValue(method = "createProjectionMatrixForCulling", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"))

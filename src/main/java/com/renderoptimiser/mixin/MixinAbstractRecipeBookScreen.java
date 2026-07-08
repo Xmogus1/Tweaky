@@ -1,6 +1,6 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.HideRecipeBook;
+import com.renderoptimiser.features.impl.gui.HideRecipeBook;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;

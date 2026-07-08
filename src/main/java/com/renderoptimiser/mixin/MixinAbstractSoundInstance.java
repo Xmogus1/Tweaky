@@ -1,6 +1,6 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.sound.SoundManager;
+import com.renderoptimiser.features.impl.sound.SoundManager;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

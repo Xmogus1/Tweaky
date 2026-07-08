@@ -1,6 +1,7 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.sound.ArrowHitSound;
+import com.renderoptimiser.features.impl.sound.ArrowHitSound;
+import com.renderoptimiser.features.impl.sound.ClassicHurt;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.client.sounds.SoundManager;
@@ -15,6 +16,14 @@ public class MixinSoundManager {
     private void onPlay(SoundInstance sound, CallbackInfoReturnable<SoundEngine.PlayResult> cir) {
         if (ArrowHitSound.onSoundPlay(sound)) {
             cir.setReturnValue(SoundEngine.PlayResult.NOT_STARTED);
+            return;
+        }
+
+        // ClassicHurt: swap player hurt sounds for the classic "oof". The nested play() re-enters
+        // this hook with the replacement instance, which no feature matches, so no recursion.
+        SoundInstance classic = ClassicHurt.replaceSound(sound);
+        if (classic != null) {
+            cir.setReturnValue(((SoundManager) (Object) this).play(classic));
         }
     }
 }

@@ -51,6 +51,7 @@ object RenderOptimiser: ClientModInitializer {
         }
 
     override fun onInitializeClient() {
+        System.setProperty("java.awt.headless", "false")
         ModRenderPipelines.init()
 
         PictureInPictureRendererRegistry.register { ItemRenderer() }

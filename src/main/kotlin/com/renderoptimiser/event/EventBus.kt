@@ -11,6 +11,10 @@ object EventBus {
 
     val listeners = ConcurrentHashMap<Class<out Event>, List<EventListener<*>>>()
 
+    /** True if any listener is registered for [cls] — a cheap guard to skip per-frame event allocation. */
+    @JvmStatic
+    fun hasListeners(cls: Class<out Event>): Boolean = listeners[cls] != null
+
     @JvmStatic
     fun post(event: Event): Boolean {
         val handlers = listeners[event.javaClass] ?: return event.cancelable && event.isCanceled

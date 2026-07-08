@@ -18,7 +18,6 @@ object FeatureManager {
 
     fun registerFeatures() {
         val scanResult = ClassGraph()
-            .enableAllInfo()
             .acceptPackages("com.renderoptimiser")
             .ignoreClassVisibility()
             .overrideClassLoaders(Thread.currentThread().contextClassLoader)

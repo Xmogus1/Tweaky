@@ -10,6 +10,14 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 import java.awt.Color
 
 class MultiCheckboxSetting(name: String, options: MutableMap<String, Boolean>): Setting<MutableMap<String, Boolean>>(name, options), Savable {
+    // value and defaultValue alias the SAME map (checkbox clicks mutate it in place), so the generic
+    // Setting.reset() is a no-op here — restore from this snapshot instead.
+    private val defaultSnapshot: Map<String, Boolean> = LinkedHashMap(options)
+
+    fun resetToDefaults() {
+        defaultSnapshot.forEach { (key, default) -> value[key] = default }
+    }
+
     private var expanded = false
     private val openAnim = Animation(250)
     private val hoverAnim = Animation(200)

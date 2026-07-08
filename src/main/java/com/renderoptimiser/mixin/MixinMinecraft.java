@@ -3,7 +3,7 @@ package com.renderoptimiser.mixin;
 import com.renderoptimiser.event.EventBus;
 import com.renderoptimiser.event.impl.PlayerInteractEvent;
 import com.renderoptimiser.features.impl.visual.Animations;
-import com.renderoptimiser.features.impl.visual.CpsDisplay;
+import com.renderoptimiser.features.impl.hud.CpsDisplay;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;

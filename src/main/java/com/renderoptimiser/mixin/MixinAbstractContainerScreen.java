@@ -2,7 +2,8 @@ package com.renderoptimiser.mixin;
 
 import com.renderoptimiser.event.EventBus;
 import com.renderoptimiser.event.impl.ContainerEvent;
-import com.renderoptimiser.features.impl.misc.ScrollableTooltip;
+import com.renderoptimiser.features.impl.gui.ScrollableTooltip;
+import com.renderoptimiser.interfaces.IContainerScreen;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -14,6 +15,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -30,11 +32,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Mixin(AbstractContainerScreen.class)
-public abstract class MixinAbstractContainerScreen extends Screen {
+public abstract class MixinAbstractContainerScreen extends Screen implements IContainerScreen {
     @Shadow @Nullable protected Slot hoveredSlot;
 
     protected MixinAbstractContainerScreen(Component component) {
         super(component);
+    }
+
+    @Override
+    @Nullable
+    public Slot tweaky_getHoveredSlot() {
+        return this.hoveredSlot;
+    }
+
+    /**
+     * slotClicked is the single funnel for EVERY slot interaction (pickup, shift-click, number-key swap,
+     * offhand swap, Q-drop, clone, drag-craft) in both 26.1.2 and 26.2 — one cancellable event covers all.
+     */
+    @Inject(method = "slotClicked", at = @At("HEAD"), cancellable = true, require = 0)
+    private void tweaky$onSlotClicked(Slot slot, int slotId, int mouseButton, ContainerInput input, CallbackInfo ci) {
+        if (EventBus.post(new ContainerEvent.SlotClick(this, slot, slotId, mouseButton, input))) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)

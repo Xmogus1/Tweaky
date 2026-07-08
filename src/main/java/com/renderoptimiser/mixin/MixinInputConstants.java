@@ -1,7 +1,7 @@
 package com.renderoptimiser.mixin;
 
 /*
-import com.renderoptimiser.features.impl.misc.NoCursorReset;
+import com.renderoptimiser.features.impl.gui.NoCursorReset;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.platform.InputConstants;

@@ -22,7 +22,7 @@ abstract class ContainerEvent(val screen: AbstractContainerScreen<*>): Event(can
     class Open(screen: Screen): ContainerEvent(screen as AbstractContainerScreen<*>)
     class Close(screen: Screen): ContainerEvent(screen as AbstractContainerScreen<*>)
 
-    class SlotClick(screen: Screen, val slotId: Int, val button: Int, val clickType: ContainerInput): ContainerEvent(screen as AbstractContainerScreen<*>)
+    class SlotClick(screen: Screen, val slot: McSlot?, val slotId: Int, val button: Int, val clickType: ContainerInput): ContainerEvent(screen as AbstractContainerScreen<*>)
     class MouseClick(screen: Screen, val mouseX: Double, val mouseY: Double, val button: Int, val modifiers: Int): ContainerEvent(screen as AbstractContainerScreen<*>)
     class MouseScroll(screen: Screen, val mouseX: Double, val mouseY: Double, val horizontalAmount: Double, val verticalAmount: Double): ContainerEvent(screen as AbstractContainerScreen<*>)
 

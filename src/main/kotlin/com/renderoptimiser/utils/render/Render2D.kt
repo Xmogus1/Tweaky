@@ -108,8 +108,8 @@ object Render2D {
     }
 
     fun String.width(): Int {
-        val lines = split('\n')
-        return lines.maxOf { mc.font.width(it.addColor()) }
+        if (indexOf('\n') < 0) return mc.font.width(addColor())
+        return split('\n').maxOf { mc.font.width(it.addColor()) }
     }
 
     fun String.height(): Int {

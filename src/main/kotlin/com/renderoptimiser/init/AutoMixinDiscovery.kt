@@ -18,6 +18,19 @@ class AutoMixinDiscovery: IMixinConfigPlugin {
     private var mixins = emptyList<String>()
 
     override fun onLoad(mixinPackage: String) {
+        // Runs during mixin bootstrap — BEFORE Minecraft touches AWT — so forcing AWT out of headless
+        // mode here actually takes effect (doing it at client-init was too late, which is why the
+        // Screenshots "Copy" threw HeadlessException). Client only: a dedicated server must stay headless.
+        if (FabricLoader.getInstance().environmentType == EnvType.CLIENT) {
+            System.setProperty("java.awt.headless", "false")
+            // Best-effort: clear GraphicsEnvironment's cached headless flag in case it was already read.
+            // Blocked by module access on newer JDKs -> harmless no-op; the property set above still wins.
+            runCatching {
+                val field = java.awt.GraphicsEnvironment::class.java.getDeclaredField("headless")
+                field.isAccessible = true
+                field.set(null, null)
+            }
+        }
         mixins = discoverMixins()
     }
 

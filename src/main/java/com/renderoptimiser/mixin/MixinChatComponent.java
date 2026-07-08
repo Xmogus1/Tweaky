@@ -1,13 +1,20 @@
 package com.renderoptimiser.mixin;
 
+import com.renderoptimiser.features.impl.general.Chat;
 import com.renderoptimiser.interfaces.IChatComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.multiplayer.chat.GuiMessage;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.renderoptimiser.RenderOptimiser.mc;
@@ -16,6 +23,28 @@ import static com.renderoptimiser.RenderOptimiser.mc;
 public abstract class MixinChatComponent implements IChatComponent {
 
     @Shadow @Final private List<GuiMessage.Line> trimmedMessages;
+
+    @Unique
+    private static final DateTimeFormatter TWEAKY_TIME = DateTimeFormatter.ofPattern("HH:mm");
+
+    /**
+     * Chat timestamps (Chat feature): the private 4-arg addMessage is the single funnel every public
+     * entry point (player, server-system, client-system) goes through — identical in 26.1.2 and 26.2.
+     */
+    @ModifyVariable(
+            method = "addMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/MessageSignature;Lnet/minecraft/client/multiplayer/chat/GuiMessageSource;Lnet/minecraft/client/multiplayer/chat/GuiMessageTag;)V",
+            at = @At("HEAD"), argsOnly = true, require = 0
+    )
+    private Component tweaky$prependTimestamp(Component message) {
+        try {
+            if (!Chat.timestampsActive()) return message;
+            return Component.empty()
+                    .append(Component.literal("[" + LocalTime.now().format(TWEAKY_TIME) + "] ").withStyle(ChatFormatting.GRAY))
+                    .append(message);
+        } catch (Throwable t) {
+            return message;
+        }
+    }
 
     @Shadow private int chatScrollbarPos;
 

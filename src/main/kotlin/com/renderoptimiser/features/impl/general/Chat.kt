@@ -10,8 +10,16 @@ import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.multiplayer.chat.GuiMessage
 import org.lwjgl.glfw.GLFW
 
-object Chat: Feature("Useful tweaks for the chat such as Ctrl + Click to copy messages.") {
+object Chat: Feature("Chat tweaks: copy messages & timestamps.") {
     private val ctrlClickToCopy by ToggleSetting("Ctrl Click to Copy", true).withDescription("Ctrl + Left Click a message to copy it to your clipboard.")
+
+    /** Read by MixinChatComponent: prepend a gray [HH:mm] to every incoming chat message. */
+    @JvmStatic
+    val timestamps by ToggleSetting("Timestamps", true).withDescription("Show a gray [HH:mm] time in front of chat messages.")
+
+    /** True when the timestamp prefix should be applied (feature + setting on). */
+    @JvmStatic
+    fun timestampsActive(): Boolean = enabled && timestamps.value
 
     override fun init() {
         register<MouseClickEvent> {

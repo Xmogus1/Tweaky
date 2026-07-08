@@ -1,6 +1,6 @@
 package com.renderoptimiser.mixin;
 
-import com.renderoptimiser.features.impl.misc.Camera;
+import com.renderoptimiser.features.impl.visual.Camera;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Options;
 import org.spongepowered.asm.mixin.Mixin;

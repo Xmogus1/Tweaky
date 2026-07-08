@@ -2,7 +2,7 @@ package com.renderoptimiser.mixin;
 
 import com.renderoptimiser.event.EventBus;
 import com.renderoptimiser.event.impl.MainThreadPacketReceivedEvent;
-import com.renderoptimiser.features.impl.misc.TimeChanger;
+import com.renderoptimiser.features.impl.general.TimeChanger;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.multiplayer.ClientPacketListener;

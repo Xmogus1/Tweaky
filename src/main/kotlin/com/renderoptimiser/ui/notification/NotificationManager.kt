@@ -11,11 +11,16 @@ import java.util.concurrent.*
 object NotificationManager {
     private val notifications = CopyOnWriteArrayList<Notification>()
     private var lastFrameTime = System.currentTimeMillis()
+    private val BG = Color(20, 20, 20, 240)
 
-    fun push(title: String, message: String, duration: Long = 3000L) {
+    fun push(title: String, message: String, duration: Long = 3000L, titleColor: Color = Color(85, 255, 85)) {
         if (notifications.any { it.title == title && it.message == message && it.duration == duration }) return
-        notifications.add(Notification(title, message, duration))
+        notifications.add(Notification(title, message, duration, titleColor))
     }
+
+    /** Convenience for red-titled failure toasts. */
+    fun error(title: String, message: String, duration: Long = 4000L) =
+        push(title, message, duration, Color(255, 85, 85))
 
     @JvmStatic
     fun render(ctx: GuiGraphicsExtractor) {
@@ -56,10 +61,10 @@ object NotificationManager {
 
             if (! isHovered && isAlive) notify.elapsedTime += delta
 
-            Render2D.drawRect(ctx, x, y, width, height, Color(20, 20, 20, 240))
+            Render2D.drawRect(ctx, x, y, width, height, BG)
             Render2D.drawRect(ctx, x, y, width, 2f, Style.accentColor)
 
-            Render2D.drawString(ctx, "§a${notify.title}", x + 10f, y + 8f, Color.GREEN)
+            Render2D.drawString(ctx, notify.title, x + 10f, y + 8f, notify.titleColor)
 
             var lineY = y + 20f
             notify.wrappedLines.forEach { line ->
