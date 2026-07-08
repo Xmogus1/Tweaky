@@ -1,16 +1,13 @@
-# Render Optimiser
+<img src="logo.png" width="72" align="right">
 
-A lightweight Fabric mod for Minecraft 26.1.2 providing quality-of-life and visual tweaks.
+# Tweaky
 
-## How to install
+A client-side Fabric mod for Minecraft **26.1.2** and **26.2** — QoL tweaks, visual upgrades, and live player cosmetics. Works in singleplayer and on any server.
 
-1. Install **[Fabric for Minecraft 26.1.2](https://fabricmc.net/use/installer/)**
-2. Install **[Fabric API](https://modrinth.com/mod/fabric-api/versions?g=26.1.2)** and **[Fabric Kotlin Language](https://modrinth.com/mod/fabric-language-kotlin)**
-3. Place the mod `.jar` into your `.minecraft/mods` folder
-4. Launch Minecraft using the **Fabric** profile
+**[⬇ Download](../../releases/latest)** — grab the jar for your MC version, drop it in `mods/`. Updates itself after that.
 
-Type `/na` in chat to open the config menu.
+Needs Fabric Loader, Fabric API, and Fabric Language Kotlin.
 
-## License
+In game: `/tweaky`
 
-This project is licensed under the [**CC0-1.0 License**](LICENSE).
+Cosmetics server: [tweaky-cosmetics](https://github.com/Xmogus1/tweaky-cosmetics)

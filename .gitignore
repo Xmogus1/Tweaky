@@ -44,3 +44,7 @@ replay_*.log
 /.kotlin
 *.salive
 /logs
+
+# tweaky
+build*.log
+cosmetics-server/
