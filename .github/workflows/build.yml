@@ -16,17 +16,17 @@ jobs:
           distribution: 'microsoft'
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: build legit + cheat
-        run: ./gradlew build
+      - name: build legit + curseforge
+        run: ./gradlew jarLegit jarCurseforge
       - name: capture build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: RenderOptimiser-jars
+          name: Tweaky-jars
           path: |
             build/libs/*-legit.jar
-            build/libs/*-cheat.jar
+            build/libs/*-curseforge.jar
           compression-level: 0
       - name: generate nightly download link
         run: |
           echo "### Nightly Download Link" >> $GITHUB_STEP_SUMMARY
-          echo "You can download the artifacts from this run here: [RenderOptimiser-jars.zip](https://nightly.link/${{ github.repository }}/workflows/build/${{ github.ref_name }}/RenderOptimiser-jars.zip)" >> $GITHUB_STEP_SUMMARY
+          echo "You can download the artifacts from this run here: [Tweaky-jars.zip](https://nightly.link/${{ github.repository }}/workflows/build/${{ github.ref_name }}/Tweaky-jars.zip)" >> $GITHUB_STEP_SUMMARY

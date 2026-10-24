@@ -21,7 +21,9 @@ import net.minecraft.network.chat.Component
  * Send with /tweaky chat <message> or /wsc <message>; bare /tweaky chat or /wsc toggles the feature.
  * Incoming lines render client-side as "Party <name>: <message>"; nothing is sent to Hypixel's own party chat.
  */
-object PartyChat: Feature("Talk to your party over the relay. Reaches party members who also run Tweaky or SBC.") {
+object PartyChat: Feature("Talk to your party over the relay. Reaches party members who also run Tweaky or SBC.", toggled = true) {
+
+    override fun toggle() = Unit
 
     private var pollCounter = 0
 
@@ -44,13 +46,7 @@ object PartyChat: Feature("Talk to your party over the relay. Reaches party memb
         if (! Cosmetics.enabled) CosmeticsSocket.stop()
     }
 
-    fun toggleFeature() {
-        toggle()
-        ChatUtils.modMessage(if (enabled) "§aParty Chat §2on" else "§cParty Chat §4off")
-    }
-
     fun send(messageRaw: String) {
-        if (! enabled) { ChatUtils.modMessage("§cParty Chat is off. Turn it on with §f/wsc§c or in §f/tweaky§c."); return }
         val message = sanitize(messageRaw)
         if (message.isEmpty()) return
         if (! CosmeticsSocket.connected) { ChatUtils.modMessage("§cNot connected to the relay."); return }

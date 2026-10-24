@@ -6,6 +6,7 @@ import com.renderoptimiser.config.Config
 import com.renderoptimiser.features.Feature
 import com.renderoptimiser.features.FeatureManager
 import com.renderoptimiser.features.impl.dev.ClickGui
+import com.renderoptimiser.features.impl.general.PartyChat
 import com.renderoptimiser.features.impl.sound.SoundManager
 import com.renderoptimiser.ui.clickgui.components.Setting
 import com.renderoptimiser.ui.clickgui.components.Style
@@ -398,7 +399,7 @@ object ClickGuiScreen: Screen(Component.literal("ClickGUI")) {
 
         // Toggle pill (right) — knob slides and track colour fades. Pure settings-holders (the ClickGui
         // config entry) get no toggle: turning them "off" is meaningless.
-        if (feature !== ClickGui) {
+        if (feature !== ClickGui && feature !== PartyChat) {
             val toggleAnim = toggleAnims.getOrPut(feature) { Animation(150L, if (feature.enabled) 1f else 0f) }
             toggleAnim.update(if (feature.enabled) 1f else 0f)
             drawToggle(context, toggleAnim.value, x + width - toggleWidth - 12f, y + (rowHeight - toggleHeight) / 2f)
@@ -546,6 +547,7 @@ object ClickGuiScreen: Screen(Component.literal("ClickGUI")) {
     }
 
     private fun handleRowClick(feature: Feature, mx: Float, x: Float, y: Float, width: Float, button: Int) {
+        if (feature === PartyChat) return
         val toggleX = x + width - toggleWidth - 12f
         // No toggle pill on the ClickGui config entry — the whole row behaves as a body click.
         val onToggle = feature !== ClickGui && mx >= toggleX - 4f && mx <= x + width
