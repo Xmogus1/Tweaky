@@ -23,8 +23,6 @@ import net.minecraft.network.chat.Component
  */
 object PartyChat: Feature("Talk to your party over the relay. Reaches party members who also run Tweaky or SBC.", toggled = true) {
 
-    override fun toggle() = Unit
-
     private var pollCounter = 0
 
     override fun init() {
@@ -46,7 +44,13 @@ object PartyChat: Feature("Talk to your party over the relay. Reaches party memb
         if (! Cosmetics.enabled) CosmeticsSocket.stop()
     }
 
+    fun toggleFeature() {
+        toggle()
+        ChatUtils.modMessage(if (enabled) "§aParty Chat §2on" else "§cParty Chat §4off")
+    }
+
     fun send(messageRaw: String) {
+        if (! enabled) { ChatUtils.modMessage("§cParty Chat is off. Type §f/wsc §cto turn it on."); return }
         val message = sanitize(messageRaw)
         if (message.isEmpty()) return
         if (! CosmeticsSocket.connected) { ChatUtils.modMessage("§cNot connected to the relay."); return }
