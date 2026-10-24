@@ -63,6 +63,8 @@ dependencies {
     runtimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
     compileOnly("maven.modrinth:iris:$iris_version")
     compileOnly("com.terraformersmc:modmenu:$modmenu_version")
+    // Hypixel Mod API core: classes provided at runtime by the HypixelModAPI mod (compile-only here).
+    compileOnly(files("libs/mod-api-1.0.2.jar"))
 
     implementation("io.github.llamalad7:mixinextras-fabric:0.4.1")
     annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.4.1")

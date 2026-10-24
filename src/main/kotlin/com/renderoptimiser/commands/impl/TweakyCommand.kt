@@ -21,7 +21,8 @@ import com.mojang.brigadier.arguments.StringArgumentType
 object TweakyCommand: BaseCommand("tweaky") {
     private val commands = mapOf(
         "/tweaky" to "Config GUI",
-        "/tweaky chat <message>" to "Message your party over the relay",
+        "/tweaky chat [message]" to "Party chat over the relay (no message = toggle)",
+        "/wsc [message]" to "Party chat (alias; no message = toggle)",
         "/tweaky hud" to "HUD editor",
         "/tweaky debug" to "Debug flags",
         "/tweaky ping" to "Shows your ping in chat",
@@ -42,6 +43,7 @@ object TweakyCommand: BaseCommand("tweaky") {
         }
 
         literal("chat") {
+            runs { PartyChat.toggleFeature() }
             argument("message", StringArgumentType.greedyString()) {
                 runs { ctx -> PartyChat.send(StringArgumentType.getString(ctx, "message")) }
             }

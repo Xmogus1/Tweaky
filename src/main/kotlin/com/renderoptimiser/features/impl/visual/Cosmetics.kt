@@ -185,7 +185,8 @@ object Cosmetics: Feature("Custom player names & sizes, synced live from your co
             "party_chat" -> {
                 val from = json.get("from")?.asString?.takeIf { it.isNotBlank() } ?: return
                 val text = json.get("text")?.asString?.takeIf { it.isNotBlank() } ?: return
-                PartyChat.onRemote(from, text)
+                val fromUuid = json.get("fromUuid")?.asString?.takeIf { it.isNotBlank() }
+                PartyChat.onRemote(from, fromUuid, text)
             }
         }
     }
