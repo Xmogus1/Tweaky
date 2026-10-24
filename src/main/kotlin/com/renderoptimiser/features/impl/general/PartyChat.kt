@@ -53,7 +53,8 @@ object PartyChat: Feature("Talk to your party over the relay. Reaches party memb
         HypixelApi.queryParty()
         val recipients = recipients()
         if (recipients.isEmpty()) {
-            ChatUtils.modMessage("§cNo party members detected yet. Open §f/party list §cor talk in party chat first.")
+            val diag = if (HypixelApi.available) "" else " §8(Hypixel Mod API not installed - using chat tracking)"
+            ChatUtils.modMessage("§cNo party members detected yet. Run §f/party list §conce, or talk in party chat.$diag")
             return
         }
         val ok = CosmeticsSocket.send(JsonObject().apply {

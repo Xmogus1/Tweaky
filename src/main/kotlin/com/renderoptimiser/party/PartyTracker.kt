@@ -3,10 +3,10 @@ package com.renderoptimiser.party
 import com.renderoptimiser.RenderOptimiser.mc
 
 /**
- * Tracks the player's current Hypixel party roster by reading party-chat lines. There is no party
- * API on this mod, so membership is learned passively from join/leave notices and from anyone who
- * talks in party chat. Used by [com.renderoptimiser.features.impl.general.PartyChat] to decide who
- * a relay message goes to and who it may be shown from.
+ * Tracks the player's current Hypixel party roster by reading chat. There is no party API in this
+ * mod, so membership is learned from join/leave notices, from anyone who talks in party chat, and
+ * from a /party list dump. Used by [com.renderoptimiser.features.impl.general.PartyChat] as the
+ * fallback source when the Hypixel Mod API is unavailable.
  */
 object PartyTracker {
     private val members = linkedSetOf<String>()
@@ -18,6 +18,13 @@ object PartyTracker {
     private val disbanded = Regex("The party was disbanded", RegexOption.IGNORE_CASE)
     private val partyChatLine = Regex("^Party > (?:\\[[^\\]]+\\]\\s*)*(\\w{1,16}):", RegexOption.IGNORE_CASE)
 
+    // /party list output. Label form: "Party Leader/Moderators/Members: [rank] Name * [rank] Name".
+    private val partyListLabel = Regex("^Party (?:Leader|Moderators?|Members?)\\s*(?:\\([0-9]+\\))?\\s*:\\s*(.+)", RegexOption.IGNORE_CASE)
+    // Per-member line with Hypixel's management buttons, e.g. "[MVP+] Name (Leader) [Kick] [Transfer]".
+    private val partyListEntry = Regex("^(?:\\[[^\\]]+\\]\\s*)+(\\w{3,16})\\b.*(?:\\(Leader\\)|\\(Moderator\\)|\\[Kick\\]|\\[Transfer\\]|\\[Promote\\]|\\[Demote\\])", RegexOption.IGNORE_CASE)
+    private val rankTag = Regex("\\[[^\\]]*\\]")
+    private val nameToken = Regex("[A-Za-z0-9_]{3,16}")
+
     private fun self(): String = runCatching { mc.user.name }.getOrDefault("?")
 
     fun onChat(textRaw: String) {
@@ -26,6 +33,13 @@ object PartyTracker {
         someoneJoined.find(text)?.let { add(it.groupValues[1]) }
         someoneLeft.find(text)?.let { members -= it.groupValues[1] }
         partyChatLine.find(text)?.let { add(it.groupValues[1]) }
+
+        partyListLabel.find(text)?.let { m ->
+            val rest = m.groupValues[1].replace(rankTag, " ")
+            nameToken.findAll(rest).forEach { add(it.value) }
+        }
+        partyListEntry.find(text)?.let { add(it.groupValues[1]) }
+
         if (youLeft.containsMatchIn(text) || disbanded.containsMatchIn(text)) members.clear()
     }
 
