@@ -52,4 +52,11 @@ public class MixinClientPacketListener {
             ci.cancel();
         }
     }
+
+    @Inject(method = "sendCommand", at = @At("HEAD"), cancellable = true)
+    private void onSendCommand(String command, CallbackInfo ci) {
+        if (PartyChat.interceptOutgoingCommand(command)) {
+            ci.cancel();
+        }
+    }
 }

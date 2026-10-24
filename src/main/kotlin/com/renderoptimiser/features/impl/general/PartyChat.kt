@@ -66,6 +66,28 @@ object PartyChat: Feature("Party chat over the relay. While ON, your typed chat 
         return true
     }
 
+    /** Redirect party-chat COMMANDS (/pc, /pchat, /party chat ...) into the ws channel too, so Odin's
+     *  /pc replies and your own /pc never reach real Hypixel chat while party chat is on. */
+    @JvmStatic
+    fun interceptOutgoingCommand(command: String): Boolean {
+        if (passthrough || ! enabled) return false
+        val body = partyChatCommandBody(command) ?: return false
+        if (body.isBlank()) return false
+        send(body)
+        return true
+    }
+
+    private fun partyChatCommandBody(command: String): String? {
+        val c = command.trimStart()
+        return when {
+            c.startsWith("pc ", true) -> c.substring(3)
+            c.startsWith("pchat ", true) -> c.substring(6)
+            c.startsWith("party chat ", true) -> c.substring(11)
+            c.startsWith("p chat ", true) -> c.substring(7)
+            else -> null
+        }
+    }
+
     fun send(messageRaw: String): Boolean {
         if (! enabled) { ChatUtils.modMessage("§cParty Chat is off. Type §f/wsc §cto turn it on."); return false }
         val message = sanitize(messageRaw)
@@ -102,14 +124,19 @@ object PartyChat: Feature("Party chat over the relay. While ON, your typed chat 
         return PartyTracker.recipients()
     }
 
-    /** Inject the message back through the real chat pipeline as a "Party > Name: ..." line, so
-     *  party-chat mods (Odin's !commands, etc.) parse it. Falls back to a plain client line. */
     private fun show(from: String, message: String) {
-        val line = Component.literal("§9Party §8> §b$from§f: §r").append(Component.literal(message))
-        val conn = mc.player?.connection
-        if (conn == null) { ChatUtils.chat(line); return }
-        runCatching { conn.handleSystemChat(ClientboundSystemChatPacket(line, false)) }
-            .onFailure { ChatUtils.chat(line) }
+        if (message.startsWith("!")) {
+            // A command: inject a real Hypixel-format party line so Odin's !commands parse it. Odin's
+            // own /pc replies are caught by interceptOutgoingCommand and kept in the ws channel.
+            val line = Component.literal("§9Party §8> §b[MVP§c+§b] $from§f: §r").append(Component.literal(message))
+            val conn = mc.player?.connection
+            if (conn == null) { ChatUtils.chat(line); return }
+            runCatching { conn.handleSystemChat(ClientboundSystemChatPacket(line, false)) }
+                .onFailure { ChatUtils.chat(line) }
+        }
+        else {
+            ChatUtils.chat(Component.literal("§5§lParty §r§f$from§7: §r").append(Component.literal(message)))
+        }
     }
 
     private fun sanitize(text: String): String = text.replace("§", "").trim().take(256)
