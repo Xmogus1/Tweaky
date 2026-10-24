@@ -2,6 +2,7 @@ package com.renderoptimiser.mixin;
 
 import com.renderoptimiser.event.EventBus;
 import com.renderoptimiser.event.impl.MainThreadPacketReceivedEvent;
+import com.renderoptimiser.features.impl.general.PartyChat;
 import com.renderoptimiser.features.impl.general.TimeChanger;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -41,6 +42,13 @@ public class MixinClientPacketListener {
     private void onSetTime(ClientboundSetTimePacket clientboundSetTimePacket, CallbackInfo ci) {
         if (TimeChanger.INSTANCE.enabled) {
             TimeChanger.setTime();
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "sendChat", at = @At("HEAD"), cancellable = true)
+    private void onSendChat(String content, CallbackInfo ci) {
+        if (PartyChat.interceptOutgoing(content)) {
             ci.cancel();
         }
     }

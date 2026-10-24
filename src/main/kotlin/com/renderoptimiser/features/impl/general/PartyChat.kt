@@ -11,6 +11,7 @@ import com.renderoptimiser.websocket.CosmeticsSocket
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import net.minecraft.network.chat.Component
+import net.minecraft.network.protocol.game.ClientboundSystemChatPacket
 
 /**
  * Party chat over the Tweaky relay (the same websocket the Cosmetics feature uses). A message goes
@@ -21,9 +22,13 @@ import net.minecraft.network.chat.Component
  * Send with /tweaky chat <message> or /wsc <message>; bare /tweaky chat or /wsc toggles the feature.
  * Incoming lines render client-side as "Party <name>: <message>"; nothing is sent to Hypixel's own party chat.
  */
-object PartyChat: Feature("Talk to your party over the relay. Reaches party members who also run Tweaky or SBC.", toggled = true) {
+object PartyChat: Feature("Party chat over the relay. While ON, your typed chat goes to your party instead of public chat.") {
 
     private var pollCounter = 0
+
+    /** Set by ChatUtils around its own sendChat so mod-initiated messages are never redirected to the party. */
+    @Volatile
+    var passthrough = false
 
     override fun init() {
         HypixelApi.init()
@@ -46,33 +51,45 @@ object PartyChat: Feature("Talk to your party over the relay. Reaches party memb
 
     fun toggleFeature() {
         toggle()
-        ChatUtils.modMessage(if (enabled) "§aParty Chat §2on" else "§cParty Chat §4off")
+        ChatUtils.modMessage(
+            if (enabled) "§aParty Chat §2on §7- your chat now goes to your party"
+            else "§cParty Chat §4off §7- back to normal chat"
+        )
     }
 
-    fun send(messageRaw: String) {
-        if (! enabled) { ChatUtils.modMessage("§cParty Chat is off. Type §f/wsc §cto turn it on."); return }
+    /** Called from MixinClientPacketListener for every chat message you type (commands are separate).
+     *  Returns true to swallow the vanilla public-chat send, so a party message never leaks to skyblock chat. */
+    @JvmStatic
+    fun interceptOutgoing(message: String): Boolean {
+        if (passthrough || ! enabled || message.isBlank()) return false
+        send(message)
+        return true
+    }
+
+    fun send(messageRaw: String): Boolean {
+        if (! enabled) { ChatUtils.modMessage("§cParty Chat is off. Type §f/wsc §cto turn it on."); return false }
         val message = sanitize(messageRaw)
-        if (message.isEmpty()) return
-        if (! CosmeticsSocket.connected) { ChatUtils.modMessage("§cNot connected to the relay."); return }
+        if (message.isEmpty()) return false
+        if (! CosmeticsSocket.connected) { ChatUtils.modMessage("§cNot connected to the relay."); return false }
         HypixelApi.queryParty()
         val recipients = recipients()
         if (recipients.isEmpty()) {
             val diag = if (HypixelApi.available) "" else " §8(Hypixel Mod API not installed - using chat tracking)"
             ChatUtils.modMessage("§cNo party members detected yet. Run §f/party list §conce, or talk in party chat.$diag")
-            return
+            return false
         }
         val ok = CosmeticsSocket.send(JsonObject().apply {
             addProperty("type", "party_chat")
             addProperty("text", message)
             add("to", JsonArray().apply { recipients.forEach(::add) })
         })
-        if (! ok) { ChatUtils.modMessage("§cCouldn't send, not connected to the relay."); return }
+        if (! ok) { ChatUtils.modMessage("§cCouldn't send, not connected to the relay."); return false }
         show(mc.user.name, message)
+        return true
     }
 
     fun onRemote(from: String, fromUuid: String?, textRaw: String) {
         if (! enabled) return
-        if (! isFromMyParty(from, fromUuid)) return
         val text = sanitize(textRaw)
         if (text.isEmpty()) return
         show(from, text)
@@ -85,17 +102,14 @@ object PartyChat: Feature("Talk to your party over the relay. Reaches party memb
         return PartyTracker.recipients()
     }
 
-    private fun isFromMyParty(from: String, fromUuid: String?): Boolean {
-        val uuidKnown = HypixelApi.available && HypixelApi.partyMembers.isNotEmpty()
-        val nameKnown = PartyTracker.hasMembers()
-        if (! uuidKnown && ! nameKnown) return true
-        if (uuidKnown && fromUuid != null && HypixelApi.partyMembers.any { it.toString().equals(fromUuid, true) }) return true
-        if (nameKnown && PartyTracker.isMember(from)) return true
-        return false
-    }
-
+    /** Inject the message back through the real chat pipeline as a "Party > Name: ..." line, so
+     *  party-chat mods (Odin's !commands, etc.) parse it. Falls back to a plain client line. */
     private fun show(from: String, message: String) {
-        ChatUtils.chat(Component.literal("§5§lParty §r§f$from§7: §r").append(Component.literal(message)))
+        val line = Component.literal("§9Party §8> §b$from§f: §r").append(Component.literal(message))
+        val conn = mc.player?.connection
+        if (conn == null) { ChatUtils.chat(line); return }
+        runCatching { conn.handleSystemChat(ClientboundSystemChatPacket(line, false)) }
+            .onFailure { ChatUtils.chat(line) }
     }
 
     private fun sanitize(text: String): String = text.replace("§", "").trim().take(256)

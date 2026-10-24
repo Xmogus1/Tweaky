@@ -60,7 +60,10 @@ object ChatUtils {
                             val conn = mc.player?.connection
                             if (conn != null) {
                                 if (str.startsWith("/")) conn.sendCommand(str.removePrefix("/"))
-                                else conn.sendChat(str)
+                                else {
+                                    com.renderoptimiser.features.impl.general.PartyChat.passthrough = true
+                                    try { conn.sendChat(str) } finally { com.renderoptimiser.features.impl.general.PartyChat.passthrough = false }
+                                }
                             }
                             lastSentTime = System.currentTimeMillis()
                             cont.resume(Unit)
