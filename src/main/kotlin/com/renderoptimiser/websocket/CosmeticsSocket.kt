@@ -95,6 +95,7 @@ object CosmeticsSocket {
             addProperty("type", "hello")
             addProperty("uuid", user.profileId.toString())
             addProperty("name", user.name)
+            addProperty("client", "tweaky")
         })
     }
 
