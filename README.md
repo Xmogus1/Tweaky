@@ -16,7 +16,7 @@ Open the menu in game with `/tweaky`. Drag HUD elements around with `/tweaky hud
 - **Chat** - chat tweaks: Ctrl + click to copy messages, and timestamps.
 - **Chat Waypoints** - click coordinates in chat to drop a temporary waypoint.
 - **Fly Speed** - change how fast you fly in creative mode.
-- **Party Chat** - party chat over the relay; your typed chat goes to your party instead of public chat.
+- **Party Chat** - your messages goes through the relay instead of hypixel.
 - **Snappy Tappy** - keeps you moving when pressing opposing direction keys (no dead stop).
 - **Time Changer** - change the client-side world time (day, noon, night, real time, and more).
 
