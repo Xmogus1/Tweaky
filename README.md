@@ -68,7 +68,3 @@ Open the menu in game with `/tweaky`. Drag HUD elements around with `/tweaky hud
 ### Interface
 - **Click GUI** - configure the settings menu itself (click sounds, and more).
 - **Super Secret Settings** - cycle through fun post-processing shaders.
-
----
-
-*Original made by Noamm9.*
