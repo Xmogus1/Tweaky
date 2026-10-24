@@ -34,7 +34,7 @@ Open the menu in game with `/tweaky`. Drag HUD elements around with `/tweaky hud
 - **No Fog** - remove fog for a clear view at any distance.
 - **Particle Control** - reduce or disable particles by category or type.
 - **Render Optimizer** - hide useless entities and effects (falling blocks, lightning, XP orbs, and more).
-- **Zoom** - hold a key to zoom in; scroll to adjust. Fully configurable.
+- **Zoom** - hold a key to zoom in scroll to adjust. Fully configurable.
 
 ### HUD
 - **Clock Display** - show the system time on screen.
