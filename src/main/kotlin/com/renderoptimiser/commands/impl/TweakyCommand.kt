@@ -7,6 +7,7 @@ import com.renderoptimiser.commands.CommandNodeBuilder
 import com.renderoptimiser.event.EventBus
 import com.renderoptimiser.event.impl.DebugFlagEvent
 import com.renderoptimiser.features.impl.general.ChatWaypoints
+import com.renderoptimiser.features.impl.general.PartyChat
 import com.renderoptimiser.features.impl.visual.Cosmetics
 import com.renderoptimiser.ui.clickgui.ClickGuiScreen
 import com.renderoptimiser.ui.hud.HudEditorScreen
@@ -20,6 +21,7 @@ import com.mojang.brigadier.arguments.StringArgumentType
 object TweakyCommand: BaseCommand("tweaky") {
     private val commands = mapOf(
         "/tweaky" to "Config GUI",
+        "/tweaky chat <message>" to "Message your party over the relay",
         "/tweaky hud" to "HUD editor",
         "/tweaky debug" to "Debug flags",
         "/tweaky ping" to "Shows your ping in chat",
@@ -36,6 +38,12 @@ object TweakyCommand: BaseCommand("tweaky") {
                 val helpMenu = StringBuilder("§9§lTweaky§r\n")
                 commands.forEach { (cmd, desc) -> helpMenu.append("§e$cmd §7- $desc\n") }
                 ChatUtils.chat(helpMenu.toString().trim())
+            }
+        }
+
+        literal("chat") {
+            argument("message", StringArgumentType.greedyString()) {
+                runs { ctx -> PartyChat.send(StringArgumentType.getString(ctx, "message")) }
             }
         }
 

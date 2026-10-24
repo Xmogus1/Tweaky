@@ -5,6 +5,7 @@ import com.renderoptimiser.RenderOptimiser.PREFIX
 import com.renderoptimiser.RenderOptimiser.logger
 import com.renderoptimiser.config.PogObject
 import com.renderoptimiser.features.Feature
+import com.renderoptimiser.features.impl.general.PartyChat
 import com.renderoptimiser.features.impl.visual.text.TextReplacer
 import com.renderoptimiser.ui.clickgui.components.impl.ButtonSetting
 import com.renderoptimiser.ui.clickgui.components.impl.TextInputSetting
@@ -110,7 +111,8 @@ object Cosmetics: Feature("Custom player names & sizes, synced live from your co
 
     override fun onDisable() {
         super.onDisable()
-        CosmeticsSocket.stop()
+        // Party Chat shares this socket, so only drop it when nothing else wants it.
+        if (! PartyChat.enabled) CosmeticsSocket.stop()
         cosmeticPeople = emptyMap()
         TextReplacer.setAll(emptyMap())
     }
@@ -177,6 +179,13 @@ object Cosmetics: Feature("Custom player names & sizes, synced live from your co
             "message" -> {
                 val text = json.get("text")?.asString?.takeIf { it.isNotBlank() } ?: return
                 ChatUtils.chat(TextReplacer.styledComponent("$PREFIX $text"))
+            }
+
+            // Party chat relayed from another client (Tweaky or SBC) in the same party.
+            "party_chat" -> {
+                val from = json.get("from")?.asString?.takeIf { it.isNotBlank() } ?: return
+                val text = json.get("text")?.asString?.takeIf { it.isNotBlank() } ?: return
+                PartyChat.onRemote(from, text)
             }
         }
     }
